@@ -1,0 +1,71 @@
+# Copyright 2021 @Profeanu Ioana, 323CA
+# README file
+-------------------------------------------------------------------------------
+* TASK 1 - Reversed One Time Pad *
+   ~ using ebx as an iterator which starts from 0 (i) and the ecx (the len
+   value), perform the ciphertext[i] = plain[i] ^ key[len - i - 1] operation
+   using registers
+   ~ at each step, increment the value of ebx and decrement the value of ecx;
+   check if the value of ecx is 0, which means we reached the end of the
+   iteration
+-------------------------------------------------------------------------------
+* TASK 2 - Ages *
+   ~ iterate through the dates array using ebx as an iterator; for each person,
+   compare the year with the current year; we have the following cases:
+   	- if the present year is greater: compare the present month with the
+   	person's month; the person's age will be as it follows:
+   		- if the present month is greater, it will be the difference
+   		between the years
+   		- if the present month is lower, it will be the difference
+   		between the years minus one
+   		- if the months are equal, compare the days; the age will be
+   		the year difference if the present day is greater, or it will
+   		be year differene minus one if the present day is lower or
+   		equal
+   	- if the present year is lower or  equal: this means that the person
+   	will be 0 years old
+   ~ after calculating the age, add it into the array of ages and continue
+   iteration
+-------------------------------------------------------------------------------
+* TASK 3 - Columnar Transposition Cipher*
+   ~ iterate through the values of the key and keep the current value of the
+   element within the eax register; keep two global variables as iterators for
+   the key and ciphertext and at each step, check if they are not greater than
+   the limits of the two arrays
+   ~ for each key value, start adding characters into the ciphertext; extract
+   the current character from the haysack;
+   ~ for each step, add the length of the key to the value of the key, in order
+   to get the wanted characters from the haysack;
+   ~ compare the current key value with the length of the haysack and if lower,
+   continue iteration;
+   ~ at the end of the haysack iteration, go back and continue the process for
+   the other elements of the key 
+-------------------------------------------------------------------------------
+* TASK 4 - Cache Load Simulation *
+   ~ Calculate the tag and the offset:
+   	- calculate the value of the tag by shifting the address' value first
+   	to the right by 3 bits, and then to the left also by 3 bits; keep the
+   	value into a global variable
+   	- calculate the offset value by performing an AND operation between the
+   	initial value of the address and the value 0x7; keep the value of the
+   	offset into a global variable as well
+   ~ Check if the address' tag is in the array of tags:
+	- using a line iterator, iterate through the array of tags and check
+	if the current tag is equal to the address' tag; is so, it's a cache
+	hit; otherwise, continue iterating until the end of the array; if no
+	equality is found, it's a cache miss
+   ~ Cache hit:
+	- keep in the edi register the value of the index at which the equal
+	tag was found
+   ~ Cache miss:
+	- keep the address of to_replace line in the ebx register; then, using
+	a column iterator, copy into the cache line the bytes found at the
+	addresses starting with the value of the tag; at each step, increase
+	the value of the tag and check if we are at the end of the line
+   ~ Retrieve the address of reg from cache:
+	- in the ebx register keep the address of the line on which the address
+	is found; in either one of the cases (cache miss or hit), the index of
+	the line is found in the edi register; in the result eax register, copy
+	the byte found at the column equal to the value of the offset
+-------------------------------------------------------------------------------
+
